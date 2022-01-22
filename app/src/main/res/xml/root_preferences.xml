@@ -1,0 +1,8 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditTextPreference
+        app:key="outputPlaylistId"
+        app:title="@string/output_playlist_title"
+        app:useSimpleSummaryProvider="false" />
+
+</PreferenceScreen>

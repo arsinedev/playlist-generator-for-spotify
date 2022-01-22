@@ -1,0 +1,60 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+Properties apikeyProperties = new Properties()
+apikeyProperties.load(project.rootProject.file('apikey.properties').newDataInputStream())
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.arsinedev.playlistgenerator"
+        minSdk 26
+        targetSdk 31
+        versionCode 1
+        versionName "1.0.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "SPOTIFY_REDIRECT_URI_PKCE", "${apikeyProperties['SPOTIFY_REDIRECT_URI_PKCE']}"
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+
+            buildConfigField "String", "SPOTIFY_CLIENT_ID", "${apikeyProperties['SPOTIFY_CLIENT_ID_DEBUG']}"
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "SPOTIFY_CLIENT_ID", "${apikeyProperties['SPOTIFY_CLIENT_ID_RELEASE']}"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.preference:preference-ktx:1.1.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation 'com.adamratzman:spotify-api-kotlin-android:3.8.5'
+
+    implementation 'androidx.preference:preference-ktx:1.2.0-rc01'
+}
